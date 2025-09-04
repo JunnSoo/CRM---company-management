@@ -1,0 +1,26 @@
+# Eclipse / IntelliJ / VSCode
+.classpath
+.project
+.settings/
+.idea/
+.vscode/
+
+# Build output
+/target/
+/build/
+/out/
+/bin/
+
+# Tomcat / Jetty
+*.log
+*.war
+*.ear
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+# Dependencies cache
+.mvn/
+.gradle/
+
