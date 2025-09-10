@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 
@@ -85,15 +89,15 @@
             <div class="sidebar-nav navbar-collapse slimscrollsidebar">
                 <ul class="nav" id="side-menu">
                     <li style="padding: 10px 0 0;">
-                        <a href="index.html" class="waves-effect"><i class="fa fa-clock-o fa-fw"
+                        <a href=${ctx}/dashboard.jsp class="waves-effect"><i class="fa fa-clock-o fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Dashboard</span></a>
                     </li>
                     <li>
-                        <a href="user-table.jsp" class="waves-effect"><i class="fa fa-user fa-fw"
+                        <a href="${ctx}/user" class="waves-effect"><i class="fa fa-user fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Thành viên</span></a>
                     </li>
                     <li>
-                        <a href="role-table.jsp" class="waves-effect"><i class="fa fa-modx fa-fw"
+                        <a href="${ctx}/roles" class="waves-effect"><i class="fa fa-modx fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Quyền</span></a>
                     </li>
                     <li>
@@ -124,54 +128,74 @@
                         <h4 class="page-title">Thêm mới thành viên</h4>
                     </div>
                 </div>
+                <c:if test="${param.msg == 'created'}">
+					<div class="alert alert-success">Thêm user thành công!</div>
+				</c:if>
+				<c:if test="${param.msg == 'failed'}">
+					<div class="alert alert-warning">Thêm user thất bại!</div>
+				</c:if>
+				<c:if test="${param.msg == 'error'}">
+					<div class="alert alert-danger">Có lỗi xảy ra!</div>
+				</c:if>
+                
                 <!-- /.row -->
                 <!-- .row -->
                 <div class="row">
                     <div class="col-md-2 col-12"></div>
                     <div class="col-md-8 col-xs-12">
                         <div class="white-box">
-                            <form class="form-horizontal form-material">
+                            <form method="post" action="${ctx}/user-add" class="form-horizontal form-material">
                                 <div class="form-group">
                                     <label class="col-md-12">Full Name</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="Johnathan Doe"
-                                            class="form-control form-control-line"> </div>
+                                        <input type="text" name="fullname" placeholder="Johnathan Doe"
+                                            class="form-control form-control-line" required="required"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="example-email" class="col-md-12">Email</label>
                                     <div class="col-md-12">
-                                        <input type="email" placeholder="johnathan@admin.com"
+                                        <input type="email" name="email" placeholder="johnathan@admin.com"
                                             class="form-control form-control-line" name="example-email"
-                                            id="example-email"> </div>
+                                            id="example-email" required="required"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Password</label>
                                     <div class="col-md-12">
-                                        <input type="password" value="password" class="form-control form-control-line">
+                                        <input type="password" name="password" value="password" class="form-control form-control-line" required="required">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-md-12">Phone No</label>
-                                    <div class="col-md-12">
-                                        <input type="text" placeholder="123 456 7890"
-                                            class="form-control form-control-line"> </div>
-                                </div>
+                               
                                 <div class="form-group">
                                     <label class="col-sm-12">Select Country</label>
                                     <div class="col-sm-12">
-                                        <select class="form-control form-control-line">
-                                            <option>London</option>
+                                        <select name="country" class="form-control form-control-line">
+                                            <option>England</option>
                                             <option>India</option>
                                             <option>Usa</option>
                                             <option>Canada</option>
                                             <option>Thailand</option>
+                                            <option>VietNam</option>
                                         </select>
                                     </div>
                                 </div>
+                                
+                                <!-- Role -->
+							    <div class="form-group">
+							        <label class="col-sm-12">Select Role</label>
+							        <div class="col-sm-12">
+							            <!-- (7) name=roleId, thường load từ DB -->
+							            <select name="roleId" class="form-control form-control-line" required>
+							                <option value="">-- Select Role --</option>
+							                <c:forEach items="${roles}" var="r">
+							                    <option value="${r.id}">${r.name}</option>
+							                </c:forEach>
+							            </select>
+							        </div>
+							    </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <button type="submit" class="btn btn-success">Add User</button>
-                                        <a href="user-table.html" class="btn btn-primary">Quay lại</a>
+                                        <a href="${ctx}/user" class="btn btn-primary">Quay lại</a>
                                     </div>
                                 </div>
                             </form>

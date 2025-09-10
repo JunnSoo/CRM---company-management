@@ -90,7 +90,7 @@ public class LoginController extends HttpServlet {
 					//Tao cookie
 					//Tao cookie co ten la email va gia tri luu tru la email nguoi dung nhap
 					Cookie cEmail = new Cookie("email",email);
-					cEmail.setMaxAge(60);// quy doi ra giay(s)
+					cEmail.setMaxAge(60*60);// quy doi ra giay(s)
 					Cookie cPassword = new Cookie("password", password);
 					cPassword.setMaxAge(60*60);
 					

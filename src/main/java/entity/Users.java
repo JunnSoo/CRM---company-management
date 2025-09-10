@@ -5,7 +5,7 @@ public class Users {
 	private String email;
 	private String password;
 	private String name;
-	private String avatar;
+	private String country;
 	private int roleID;
 	private String roleDescription;
 	
@@ -39,17 +39,17 @@ public class Users {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getAvatar() {
-		return avatar;
-	}
-	public void setAvatar(String avatar) {
-		this.avatar = avatar;
-	}
 	public int getRoleID() {
 		return roleID;
 	}
 	public void setRoleID(int roleID) {
 		this.roleID = roleID;
+	}
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
 }

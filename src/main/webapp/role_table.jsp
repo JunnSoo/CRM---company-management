@@ -69,12 +69,12 @@
         <div class="sidebar-nav navbar-collapse slimscrollsidebar">
             <ul class="nav" id="side-menu">
                 <li style="padding:10px 0 0;">
-                    <a href="${ctx}/index.html" class="waves-effect">
+                    <a href="${ctx}/dashboard.jsp" class="waves-effect">
                         <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i><span class="hide-menu">Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a href="${ctx}/users" class="waves-effect">
+                    <a href="${ctx}/user" class="waves-effect">
                         <i class="fa fa-user fa-fw" aria-hidden="true"></i><span class="hide-menu">Thành viên</span>
                     </a>
                 </li>
@@ -107,7 +107,7 @@
 
             <!-- Flash message -->
             <c:if test="${not empty param.msg}">
-                <div class="alert 
+                <div class="alert">
                     <c:choose>
                         <c:when test='${param.msg eq "created" || param.msg eq "updated" || param.msg eq "deleted"}'>alert-success</c:when>
                         <c:otherwise>alert-danger</c:otherwise>
@@ -138,7 +138,7 @@
                                     <th>STT</th>
                                     <th>Tên Quyền</th>
                                     <th>Mô Tả</th>
-                                    <th>Hành Động</th>
+                                    <th>Options</th>
                                 </tr>
                                 </thead>
                                 <tbody>

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 
@@ -91,15 +91,15 @@
             <div class="sidebar-nav navbar-collapse slimscrollsidebar">
                 <ul class="nav" id="side-menu">
                     <li style="padding: 10px 0 0;">
-                        <a href="index.html" class="waves-effect"><i class="fa fa-clock-o fa-fw"
+                        <a href=${ctx}/dashboard.jsp class="waves-effect"><i class="fa fa-clock-o fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Dashboard</span></a>
                     </li>
                     <li>
-                        <a href="user-table.html" class="waves-effect"><i class="fa fa-user fa-fw"
+                        <a href="${ctx}/user" class="waves-effect"><i class="fa fa-user fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Thành viên</span></a>
                     </li>
                     <li>
-                        <a href="role-table.html" class="waves-effect"><i class="fa fa-modx fa-fw"
+                        <a href="${ctx}/roles" class="waves-effect"><i class="fa fa-modx fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Quyền</span></a>
                     </li>
                     <li>
@@ -130,10 +130,32 @@
                         <h4 class="page-title">Danh sách thành viên</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12 text-right">
-                        <a href="user-add.html" class="btn btn-sm btn-success">Thêm mới</a>
+                        <a href="${ctx}/user-add" class="btn btn-sm btn-success">Thêm mới</a>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
+                
+                <!-- Flash message -->
+                <c:if test="${not empty param.msg}">
+	                <div class="alert
+	                    <c:choose>
+	                        <c:when test='${param.msg eq "created" || param.msg eq "updated" || param.msg eq "deleted"}'>alert-success</c:when>
+	                        <c:otherwise>alert-danger</c:otherwise>
+	                    </c:choose>
+	                " role="alert" style="margin-top:10px;">
+	                    <c:choose>
+	                        <c:when test="${param.msg eq 'created'}">Them user thành công.</c:when>
+	                        <c:when test='${param.msg eq "updated"}'>Cập nhật user thành công.</c:when>
+	                        <c:when test='${param.msg eq "deleted"}'>Xóa user thành công.</c:when>
+	                        <c:when test='${param.msg eq "failed"}'>Thao tác thất bại. Vui lòng kiểm tra lại.</c:when>
+	                        <c:when test='${param.msg eq "delete_failed"}'>Xóa thất bại. Vui lòng thử lại.</c:when>
+	                        <c:when test='${param.msg eq "missing_id"}'>Thiếu tham số ID.</c:when>
+	                        <c:when test='${param.msg eq "bad_id"}'>ID không hợp lệ.</c:when>
+	                        <c:when test='${param.msg eq "not_found"}'>Không tìm thấy user</c:when>
+	                        <c:otherwise>Có lỗi xảy ra.</c:otherwise>
+	                    </c:choose>
+	                </div>
+            	</c:if>
                 <!-- /row -->
                 <div class="row">
                     <div class="col-sm-12">
@@ -145,23 +167,26 @@
                                             <th>STT</th>
                                             <th>First Name</th>
                                             <th>email</th>
-                                            <th>Avatar</th>
+                                            <th>Country</th>
                                             <th>Role</th>
-                                            <th>#</th>
+                                            <th>Options</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-										<c:forEach var="u" items="${listUser}">
+										<c:forEach var="u" items="${listUser}" varStatus="st">
                                             <tr>
-                                                <td>${u.id}</td>
+                                                <td>${st.index + 1}</td>
                                                 <td>${u.name}</td>
                                                 <td>${u.email}</td>
-                                                <td>${u.avatar}</td>
+                                                <td>${u.country}</td>
                                                 <td>${u.roleDescription}</td>
                                                 <td>
-                                                    <a href="user/edit?id=${u.id}" class="btn btn-sm btn-primary">Sửa</a>
-                                                    <a href="user-delete?id=${u.id}" class="btn btn-sm btn-danger">Xóa</a>
-                                                    <a href="user-details?id=${u.id}" class="btn btn-sm btn-info">Xem</a>
+                                                    <a href="${ctx}/user-edit?id=${u.id}" class="btn btn-sm btn-primary">Sửa</a>
+                                                    <a href="${ctx}/user-delete?id=${u.id}" class="btn btn-sm btn-danger"
+                                                    onclick="return confirm('Bạn chắc chắn muốn user quyền này?');">
+                                                    Xóa
+                                                    </a>
+                                                    <a href="${ctx}/user-details?id=${u.id}" class="btn btn-sm btn-info">Xem</a>
                                                 </td>
                                             </tr>
                                         </c:forEach>
