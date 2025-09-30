@@ -11,7 +11,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-@WebFilter(filterName ="authenFilter",urlPatterns = {"/user"})
+@WebFilter(filterName ="authenFilter",urlPatterns = {"/*"})
 public class AuthenticationFilter implements Filter {
 	/*
 	 * check xem nguoi dung co dang nhap chua. Neu chua dang nhap da ve trang login, neu roi thi cho di tiep
@@ -24,26 +24,49 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         
+        String path = req.getServletPath();
+        String ctx = req.getContextPath();
+        
+        if (path.startsWith("/login") || path.startsWith("/assets")|| path.startsWith("/plugins")) {
+        	chain.doFilter(req, resp);
+        	return;
+        }
+        
+        String role = null;
         Cookie[] cookies = req.getCookies();
-        //goi boolean vi khi xu ly logic code trong vong lap for de bi goi 2 cookie
-        boolean isLogined = false;
-
-        for (Cookie cookie : cookies) {
-            String name = cookie.getName();
-            if (name.equals("role")) {
-                isLogined =true;
+        if(cookies!= null) {
+        	for(Cookie c : cookies) {
+        		if("role".equals(c.getName())) {
+        			role = c.getValue();
+            		break;
+        		}
+        		
+        	}
+        }
+        
+        // ==== PHÂN QUYỀN THEO ROLE & USE CASE ====
+        if (path.startsWith("/user") || path.startsWith("/roles")) {
+            if (!"1".equals(role)) {
+                resp.sendRedirect(ctx + "/403.jsp");
+                return;
             }
         }
-        if(isLogined) {
-        	chain.doFilter(request, response);
-        }else {
-        	//khong co req.getContextPath() thi mat cai crm_app10 (lay dong)
-        	resp.sendRedirect(req.getContextPath() + "/login");
+        
+        if (path.startsWith("/job") || path.startsWith("/task")) {
+            if (!("1".equals(role) || "2".equals(role))) {
+                resp.sendRedirect(ctx + "/403.jsp");
+                return;
+            }
+        }
+        
+     // Member chỉ có quyền task cá nhân, profile cá nhân
+        if (path.startsWith("/profile")) {
+            // tất cả role đều dùng được
         }
 
+        // Nếu hợp lệ
+        chain.doFilter(request, response);
         
-		System.out.println("ktr filter");
-
     }
 	
 }

@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />    
 <!DOCTYPE html>
 <html lang="en">
 
@@ -69,10 +73,10 @@
                                 <b class="hidden-xs">Cybersoft</b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="profile.html">Thông tin cá nhân</a></li>
+                                <li><a href="${ctx}/profile">Thông tin cá nhân</a></li>
                                 <li><a href="#">Thống kê công việc</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#">Đăng xuất</a></li>
+                                <li><a href="${ctx}/logout">Đăng xuất</a></li>
                             </ul>
                         </div>
                     </li>
@@ -87,23 +91,23 @@
             <div class="sidebar-nav navbar-collapse slimscrollsidebar">
                 <ul class="nav" id="side-menu">
                     <li style="padding: 10px 0 0;">
-                        <a href="index.html" class="waves-effect"><i class="fa fa-clock-o fa-fw"
+                        <a href="${ctx}/dashboard.jsp" class="waves-effect"><i class="fa fa-clock-o fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Dashboard</span></a>
                     </li>
                     <li>
-                        <a href="user-table.html" class="waves-effect"><i class="fa fa-user fa-fw"
+                        <a href="${ctx}/user" class="waves-effect"><i class="fa fa-user fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Thành viên</span></a>
                     </li>
                     <li>
-                        <a href="role-table.html" class="waves-effect"><i class="fa fa-modx fa-fw"
+                        <a href="${ctx}/roles" class="waves-effect"><i class="fa fa-modx fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Quyền</span></a>
                     </li>
                     <li>
-                        <a href="groupwork.html" class="waves-effect"><i class="fa fa-table fa-fw"
+                        <a href="${ctx}/job" class="waves-effect"><i class="fa fa-table fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Công việc</span></a>
                     </li>
                     <li>
-                        <a href="task.html" class="waves-effect"><i class="fa fa-table fa-fw"
+                        <a href="${ctx}/task" class="waves-effect"><i class="fa fa-table fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Công việc</span></a>
                     </li>
                     <li>
@@ -126,58 +130,67 @@
                         <h4 class="page-title">Thêm mới công việc</h4>
                     </div>
                 </div>
+                
+                <c:if test="${param.msg == 'updated'}">
+					<div class="alert alert-success">Cập nhật task thành công!</div>
+				</c:if>
+				<c:if test="${param.msg == 'failed'}">
+					<div class="alert alert-warning">Cập nhật task thất bại!</div>
+				</c:if>
+				<c:if test="${param.msg == 'error'}">
+					<div class="alert alert-danger">Có lỗi xảy ra!</div>
+				</c:if>
                 <!-- /.row -->
                 <!-- .row -->
                 <div class="row">
                     <div class="col-md-2 col-12"></div>
                     <div class="col-md-8 col-xs-12">
                         <div class="white-box">
-                            <form class="form-horizontal form-material">
+                            <form class="form-horizontal form-material" method="post" action="${ctx}/profile-edit">
+                            	<!-- id bắt buộc cho WHERE -->
+							    <input type="hidden" name="id" value="${task.id}">
+							    <!-- Nếu controller đang đọc user_id từ form -->
+							    <input type="hidden" name="user_id" value="${task.user_id}">
+							    <!-- Nếu controller đang đọc job_id từ form -->
+							    <input type="hidden" name="job_id" value="${task.job_id}">
                                 <div class="form-group">
-                                    <label class="col-md-12">Dự án</label>
+                                    <label class="col-md-12">Tên dự án</label>
                                     <div class="col-md-12">
-                                        <select class="form-control form-control-line">
-                                            <option>Dự án CRM</option>
-                                            <option>Dự án Elearning</option>
-                                            <option>Dự án Rạp chiếu phim</option>
-                                        </select>
+                                        <input type="text" readonly value="${task.name}" class="form-control form-control-line">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Tên công việc</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="Tên công việc"
-                                            class="form-control form-control-line">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12">Người thực hiện</label>
-                                    <div class="col-md-12">
-                                        <select class="form-control form-control-line">
-                                            <option>Nguyễn Văn Tèo</option>
-                                            <option>Trần Thị Lan</option>
-                                            <option>Cao Ngọc Hiếu</option>
-                                        </select>
+                                        <input type="text" readonly value="${task.jobName}" class="form-control form-control-line">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Ngày bắt đầu</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="dd/MM/yyyy"
-                                            class="form-control form-control-line"> 
+                                        <input type="text" readonly value="${task.start_date}" class="form-control form-control-line"> 
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Ngày kết thúc</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="dd/MM/yyyy"
-                                            class="form-control form-control-line"> 
+                                        <input type="text" readonly value="${task.end_date}" class="form-control form-control-line"> 
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Trạng thái</label>
+                                    <div class="col-md-12">
+                                        <select name="status_id" class="form-control form-control-line">
+                                            <c:forEach items="${status}" var="s">
+							                    <option value="${s.id}" <c:if test="${s.id == task.status_id}">selected</c:if>>${s.name}</option>
+							                </c:forEach>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <button type="submit" class="btn btn-success">Lưu lại</button>
-                                        <a href="task.html" class="btn btn-primary">Quay lại</a>
+                                        <a href="${ctx}/profile" class="btn btn-primary">Quay lại</a>
                                     </div>
                                 </div>
                             </form>

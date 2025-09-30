@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 
@@ -72,10 +73,10 @@
                                     <b class="hidden-xs">Cybersoft</b> 
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="profile.html">Thông tin cá nhân</a></li>
+                                    <li><a href="${ctx}/profile">Thông tin cá nhân</a></li>
                                     <li><a href="#">Thống kê công việc</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="#">Đăng xuất</a></li>
+                                    <li><a href="${ctx}/logout">Đăng xuất</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -90,23 +91,23 @@
             <div class="sidebar-nav navbar-collapse slimscrollsidebar">
                 <ul class="nav" id="side-menu">
                     <li style="padding: 10px 0 0;">
-                        <a href="index.html" class="waves-effect"><i class="fa fa-clock-o fa-fw"
+                        <a href="${ctx}/dashboard.jsp" class="waves-effect"><i class="fa fa-clock-o fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Dashboard</span></a>
                     </li>
                     <li>
-                        <a href="user-table.html" class="waves-effect"><i class="fa fa-user fa-fw"
+                        <a href="${ctx}/user" class="waves-effect"><i class="fa fa-user fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Thành viên</span></a>
                     </li>
                     <li>
-                        <a href="role-table.html" class="waves-effect"><i class="fa fa-modx fa-fw"
+                        <a href="${ctx}/roles" class="waves-effect"><i class="fa fa-modx fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Quyền</span></a>
                     </li>
                     <li>
-                        <a href="groupwork.html" class="waves-effect"><i class="fa fa-table fa-fw"
+                        <a href="${ctx}/job" class="waves-effect"><i class="fa fa-table fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Dự án</span></a>
                     </li>
                     <li>
-                        <a href="task.html" class="waves-effect"><i class="fa fa-table fa-fw"
+                        <a href="${ctx}/task" class="waves-effect"><i class="fa fa-table fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Công việc</span></a>
                     </li>
                     <li>
@@ -129,36 +130,61 @@
                         <h4 class="page-title">Danh sách dự án</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12 text-right">
-                        <a href="groupwork-add.html" class="btn btn-sm btn-success">Thêm mới</a>
+                        <a href="${ctx}/job-add" class="btn btn-sm btn-success">Thêm mới</a>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
+                
+                <!-- Flash message -->
+	            <c:if test="${not empty param.msg}">
+	                <div class="alert
+	                    <c:choose>
+	                        <c:when test='${param.msg eq "created" || param.msg eq "updated" || param.msg eq "deleted"}'>alert-success</c:when>
+	                        <c:otherwise>alert-danger</c:otherwise>
+	                    </c:choose>
+	                " role="alert" style="margin-top:10px;">
+	                    <c:choose>
+	                        <c:when test="${param.msg eq 'created'}">Tạo dự án thành công.</c:when>
+	                        <c:when test='${param.msg eq "updated"}'>Cập nhật dự án thành công.</c:when>
+	                        <c:when test='${param.msg eq "deleted"}'>Xóa dự án thành công.</c:when>
+	                        <c:when test='${param.msg eq "failed"}'>Thao tác thất bại. Vui lòng kiểm tra lại.</c:when>
+	                        <c:when test='${param.msg eq "delete_failed"}'>Xóa thất bại. Vui lòng thử lại.</c:when>
+	                        <c:when test='${param.msg eq "missing_id"}'>Thiếu tham số ID.</c:when>
+	                        <c:when test='${param.msg eq "bad_id"}'>ID không hợp lệ.</c:when>
+	                        <c:when test='${param.msg eq "not_found"}'>Không tìm thấy dự án.</c:when>
+	                        <c:otherwise>Có lỗi xảy ra.</c:otherwise>
+	                    </c:choose>
+	                </div>
+	            </c:if>
+                
                 <!-- /row -->
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="white-box">
                             <div class="table-responsive">
-                                <table class="table" id="example">
+                                <table class="table " id="example">
+                                	
                                     <thead>
                                         <tr>
                                             <th>STT</th>
                                             <th>Tên Dự Án</th>
                                             <th>Ngày Bắt Đầu</th>
                                             <th>Ngày Kết Thúc</th>
+                                            <th></th>
                                             <th>Hành Động</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach var="j" items="${listJobs}">
+                                        <c:forEach var="j" items="${listJobs}" varStatus="st">
                                         	<tr>
-                                        		<td>${j.id}</td>
+                                        		<td>${st.index + 1}</td>
 	                                            <td>${j.name}</td>
 	                                            <td>${j.start_date}</td>
 	                                            <td>${j.end_date}<td/>
 	                                            <td>
-	                                                <a href="#" class="btn btn-sm btn-primary">Sửa</a>
-	                                                <a href="#" class="btn btn-sm btn-danger">Xóa</a>
-	                                                <a href="groupwork-details.html" class="btn btn-sm btn-info">Xem</a>
+	                                                <a href="${ctx}/job-edit?id=${j.id}" class="btn btn-sm btn-primary">Sửa</a>
+	                                                <a href="${ctx}/job-delete?id=${j.id}" class="btn btn-sm btn-danger">Xóa</a>
+	                                                <a href="${ctx}/job-detail?id=${j.id}" class="btn btn-sm btn-info">Xem</a>
 	                                            </td>
                                         	<tr/>
                                         </c:forEach>
@@ -189,11 +215,6 @@
     <script src="js/waves.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="js/custom.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#example').DataTable();
-        });
-    </script>
 </body>
 
 </html>

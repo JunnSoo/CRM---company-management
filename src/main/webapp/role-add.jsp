@@ -70,10 +70,10 @@
                                     <b class="hidden-xs">Cybersoft</b> 
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="profile.html">Thông tin cá nhân</a></li>
+                                    <li><a href="${ctx}/profile">Thông tin cá nhân</a></li>
                                     <li><a href="#">Thống kê công việc</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="#">Đăng xuất</a></li>
+                                    <li><a href="${ctx}/logout">Đăng xuất</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -100,11 +100,11 @@
                                 aria-hidden="true"></i><span class="hide-menu">Quyền</span></a>
                     </li>
                     <li>
-                        <a href="groupwork.jsp" class="waves-effect"><i class="fa fa-table fa-fw"
+                        <a href="${ctx}/job" class="waves-effect"><i class="fa fa-table fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Dự án</span></a>
                     </li>
                     <li>
-                        <a href="task.jsp" class="waves-effect"><i class="fa fa-table fa-fw"
+                        <a href="${ctx}/task" class="waves-effect"><i class="fa fa-table fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Công việc</span></a>
                     </li>
                     <li>
@@ -133,6 +133,9 @@
 				<c:if test="${param.msg == 'failed'}">
 				  <div class="alert alert-warning">Tạo quyền thất bại. Vui lòng kiểm tra dữ liệu nhập.</div>
 				</c:if>
+				<c:if test="${param.msg == 'error'}">
+					<div class="alert alert-danger">Có lỗi xảy ra!</div>
+				</c:if>
                 <!-- /.row -->
                 <!-- .row -->
                 <div class="row">
@@ -156,7 +159,7 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <button type="submit" class="btn btn-success">Add Role</button>
-                                        <a href="role-table.jsp" class="btn btn-primary">Quay lại</a>
+                                        <a href="${ctx}/roles" class="btn btn-primary">Quay lại</a>
                                     </div>
                                 </div>
                             </form>

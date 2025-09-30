@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,14 +13,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import crm_app10.services.RolesServices;
+import crm_app10.services.TaskServices;
 import crm_app10.services.UserServices;
 import entity.Roles;
+import entity.Tasks;
 import entity.Users;
-@WebServlet(name="userController", urlPatterns = {"/user","/user-add","/user-edit","/user-delete"})
+@WebServlet(name="userController", urlPatterns = {"/user","/user-add","/user-edit","/user-delete","/user-detail"})
 public class UserController extends HttpServlet{
 	
 	private UserServices userServices = new UserServices();
 	private RolesServices rolesService = new RolesServices();
+	private TaskServices taskServices = new TaskServices();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
@@ -59,6 +63,41 @@ public class UserController extends HttpServlet{
                 req.setAttribute("user", user);
                 req.getRequestDispatcher("user-edit.jsp").forward(req, resp);
                 return;
+			}
+			case "/user-detail":{
+				String idStr = req.getParameter("id");
+                if (idStr == null || idStr.isEmpty()) {
+                    resp.sendRedirect(req.getContextPath() + "/user?msg=missing_id");
+                    return;
+                }
+                int user_id;
+                try {
+                    user_id = Integer.parseInt(idStr);
+                } catch (NumberFormatException e) {
+                    resp.sendRedirect(req.getContextPath() + "/user?msg=bad_id");
+                    return;
+                }
+                
+                Users user = userServices.getUserById(user_id);
+                if (user == null) {
+                    resp.sendRedirect(req.getContextPath() + "/user?msg=not_found");
+                    return;
+                }
+                req.setAttribute("user", user);
+                
+                Map<String , List<Tasks>> group = taskServices.getTaskByStatus(user_id);
+                req.setAttribute("todo", group.get("todo"));
+                req.setAttribute("inProgress", group.get("inProgress"));
+                req.setAttribute("done", group.get("done"));
+                
+                
+                Map<String, Integer> percents = taskServices.getTaskPercentages(user_id);
+                req.setAttribute("percentTodo", percents.get("percentTodo"));
+                req.setAttribute("percentInProgress", percents.get("percentInProgress"));
+                req.setAttribute("percentDone", percents.get("percentDone"));
+                
+                req.getRequestDispatcher("user-detail.jsp").forward(req, resp);
+				return;
 			}
 			case "/user-delete":{
 				String idStr = req.getParameter("id");

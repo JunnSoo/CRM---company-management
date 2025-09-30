@@ -86,6 +86,15 @@ public class LoginController extends HttpServlet {
 				cRole.setMaxAge(8*60*60);
 				resp.addCookie(cRole);
 				
+				int user_id = listUser.get(0).getId();
+				Cookie cUserId = new Cookie("uid", String.valueOf(user_id));
+				// Quan trọng: đặt Path để cookie dùng được ở các URL khác (profile, task, ...)
+				cUserId.setPath((req.getContextPath() == null || req.getContextPath().isEmpty()) ? "/" : req.getContextPath());
+				
+				int maxAge = (remember != null) ? (7*24*60*60) : (8*60*60);
+				cUserId.setMaxAge(maxAge);
+
+				resp.addCookie(cUserId);
 				if(remember!=null) {
 					//Tao cookie
 					//Tao cookie co ten la email va gia tri luu tru la email nguoi dung nhap

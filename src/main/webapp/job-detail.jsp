@@ -1,3 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -77,10 +83,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <b class="hidden-xs">Cybersoft</b> 
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="profile.html">Thông tin cá nhân</a></li>
+                                    <li><a href="${ctx}/profile">Thông tin cá nhân</a></li>
                                     <li><a href="#">Thống kê công việc</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="#">Đăng xuất</a></li>
+                                    <li><a href="${ctx}/logout">Đăng xuất</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -95,23 +101,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="sidebar-nav navbar-collapse slimscrollsidebar">
                 <ul class="nav" id="side-menu">
                     <li style="padding: 10px 0 0;">
-                        <a href="index.html" class="waves-effect"><i class="fa fa-clock-o fa-fw"
+                        <a href="${ctx}/dashboard.jsp" class="waves-effect"><i class="fa fa-clock-o fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Dashboard</span></a>
                     </li>
                     <li>
-                        <a href="user-table.html" class="waves-effect"><i class="fa fa-user fa-fw"
+                        <a href="${ctx}/user" class="waves-effect"><i class="fa fa-user fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Thành viên</span></a>
                     </li>
                     <li>
-                        <a href="role-table.html" class="waves-effect"><i class="fa fa-modx fa-fw"
+                        <a href="${ctx}/roles" class="waves-effect"><i class="fa fa-modx fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Quyền</span></a>
                     </li>
                     <li>
-                        <a href="groupwork.html" class="waves-effect"><i class="fa fa-table fa-fw"
+                        <a href="${ctx}/job" class="waves-effect"><i class="fa fa-table fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Dự án</span></a>
                     </li>
                     <li>
-                        <a href="task.html" class="waves-effect"><i class="fa fa-table fa-fw"
+                        <a href="${ctx}/task" class="waves-effect"><i class="fa fa-table fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Công việc</span></a>
                     </li>
                     <li>
@@ -152,12 +158,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <h5 class="text-muted vb">CHƯA BẮT ĐẦU</h5>
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-6">
-                                    <h3 class="counter text-right m-t-15 text-danger">20%</h3>
+                                    <h3 class="counter text-right m-t-15 text-danger">${percentTodo}%</h3>
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="progress">
                                         <div class="progress-bar progress-bar-danger" role="progressbar"
-                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: ${percentTodo}%">
                                         </div>
                                     </div>
                                 </div>
@@ -174,12 +180,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <h5 class="text-muted vb">ĐANG THỰC HIỆN</h5>
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-6">
-                                    <h3 class="counter text-right m-t-15 text-megna">50%</h3>
+                                    <h3 class="counter text-right m-t-15 text-megna">${percentInProgress}%</h3>
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="progress">
                                         <div class="progress-bar progress-bar-megna" role="progressbar"
-                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
+                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: ${percentInProgress}%">
                                         </div>
                                     </div>
                                 </div>
@@ -196,12 +202,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <h5 class="text-muted vb">HOÀN THÀNH</h5>
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-6">
-                                    <h3 class="counter text-right m-t-15 text-primary">30%</h3>
+                                    <h3 class="counter text-right m-t-15 text-primary">${percentDone}%</h3>
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="progress">
                                         <div class="progress-bar progress-bar-primary" role="progressbar"
-                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 30%">
+                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: ${percentDone}%">
                                         </div>
                                     </div>
                                 </div>
@@ -214,135 +220,81 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                 <!-- BEGIN DANH SÁCH CÔNG VIỆC -->
                 <div class="row">
-                    <div class="col-xs-12">
-                        <a href="#" class="group-title">
-                            <img width="30" src="plugins/images/users/pawandeep.jpg" class="img-circle" />
-                            <span>Pavan kumar</span>
-                        </a>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="white-box">
-                            <h3 class="box-title">Chưa thực hiện</h3>
-                            <div class="message-center">
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span
-                                            class="time">9:30 AM</span>
-                                    </div>
-                                </a>
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span>
-                                        <span class="time">9:10 AM</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="white-box">
-                            <h3 class="box-title">Đang thực hiện</h3>
-                            <div class="message-center">
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span
-                                            class="time">9:30 AM</span>
-                                    </div>
-                                </a>
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span>
-                                        <span class="time">9:10 AM</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="white-box">
-                            <h3 class="box-title">Đã hoàn thành</h3>
-                            <div class="message-center">
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span
-                                            class="time">9:30 AM</span>
-                                    </div>
-                                </a>
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span>
-                                        <span class="time">9:10 AM</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <a href="#" class="group-title">
-                            <img width="30" src="plugins/images/users/pawandeep.jpg" class="img-circle" />
-                            <span>Pavan kumar</span>
-                        </a>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="white-box">
-                            <h3 class="box-title">Chưa thực hiện</h3>
-                            <div class="message-center">
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span
-                                            class="time">9:30 AM</span>
-                                    </div>
-                                </a>
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span>
-                                        <span class="time">9:10 AM</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="white-box">
-                            <h3 class="box-title">Đang thực hiện</h3>
-                            <div class="message-center">
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span
-                                            class="time">9:30 AM</span>
-                                    </div>
-                                </a>
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span>
-                                        <span class="time">9:10 AM</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="white-box">
-                            <h3 class="box-title">Đã hoàn thành</h3>
-                            <div class="message-center">
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span
-                                            class="time">9:30 AM</span>
-                                    </div>
-                                </a>
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span>
-                                        <span class="time">9:10 AM</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <c:set var="statusCols" value="CHƯA BẮT ĐẦU,ĐANG THỰC HIỆN,HOÀN THÀNH" />
+
+					<c:forEach var="userKey" items="${buckets.keySet()}">
+						<c:set var="userId" value="${fn:split(userKey, '|')[0]}" />
+    					<c:set var="userName" value="${fn:split(userKey, '|')[1]}" />
+					    <!-- Header tên user -->
+					    <div class="row">
+					        <div class="col-xs-12">
+					            <a href="${ctx}/user-detail?id=${userId}" class="group-title">
+					                <!-- Có avatar thì thay src tương ứng, còn không cứ để placeholder -->
+					                <img width="30" src="plugins/images/users/pawandeep.jpg" class="img-circle" />
+					                <span>${userName}</span>
+					            </a>
+					        </div>
+					    </div>
+					
+					    <!-- 3 cột trạng thái cho user hiện tại -->
+					    <div class="row">
+					        <!-- Cột CHƯA BẮT ĐẦU -->
+					        <div class="col-md-4">
+					            <div class="white-box">
+					                <h3 class="box-title">Chưa thực hiện</h3>
+					                <div class="message-center">
+					                    <c:forEach var="t" items="${buckets[userKey]['Chưa thực hiện']}">
+					                        <a href="#">
+					                            <div class="mail-contnet">
+					                                <h5>${t.name}</h5>
+					                                <span class="mail-desc"></span>
+					                                <span class="time">Bắt đầu: ${t.start_date} </span>
+					                                <span class="time">Kết thúc:  ${t.end_date}</span>
+					                            </div>
+					                        </a>
+					                    </c:forEach>
+					                </div>
+					            </div>
+					        </div>
+					
+					        <!-- Cột ĐANG THỰC HIỆN -->
+					        <div class="col-md-4">
+					            <div class="white-box">
+					                <h3 class="box-title">Đang thực hiện</h3>
+					                <div class="message-center">
+					                    <c:forEach var="t" items="${buckets[userKey]['Đang thực hiện']}">
+					                        <a href="#">
+					                            <div class="mail-contnet">
+					                                <h5>${t.name}</h5>
+					                                <span class="time">Bắt đầu: ${t.start_date} </span>
+					                                <span class="time">Kết thúc:  ${t.end_date}</span>
+					                            </div>
+					                        </a>
+					                    </c:forEach>
+					                </div>
+					            </div>
+					        </div>
+					
+					        <!-- Cột HOÀN THÀNH -->
+					        <div class="col-md-4">
+					            <div class="white-box">
+					                <h3 class="box-title">Đã hoàn thành</h3>
+					                <div class="message-center">
+					                    <c:forEach var="t" items="${buckets[userKey]['Hoàn thành']}">
+					                        <a href="#">
+					                            <div class="mail-contnet">
+					                                <h5>${t.name}</h5>
+					                                <span class="time">Bắt đầu: ${t.start_date} </span>
+					                                <span class="time">Kết thúc:  ${t.end_date}</span>
+					                            </div>
+					                        </a>
+					                    </c:forEach>
+					                </div>
+					            </div>
+					        </div>
+					    </div>
+					</c:forEach>
+                
                 <!-- END DANH SÁCH CÔNG VIỆC -->
             </div>
             <!-- /.container-fluid -->

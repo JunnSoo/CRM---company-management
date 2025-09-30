@@ -73,10 +73,10 @@
                                     <b class="hidden-xs">Cybersoft</b> 
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="profile.html">Thông tin cá nhân</a></li>
+                                    <li><a href="${ctx}/profile">Thông tin cá nhân</a></li>
                                     <li><a href="#">Thống kê công việc</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="#">Đăng xuất</a></li>
+                                    <li><a href="${ctx}/logout">Đăng xuất</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -91,7 +91,7 @@
             <div class="sidebar-nav navbar-collapse slimscrollsidebar">
                 <ul class="nav" id="side-menu">
                     <li style="padding: 10px 0 0;">
-                        <a href=${ctx}/dashboard.jsp class="waves-effect"><i class="fa fa-clock-o fa-fw"
+                        <a href="${ctx}/dashboard.jsp" class="waves-effect"><i class="fa fa-clock-o fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Dashboard</span></a>
                     </li>
                     <li>
@@ -103,11 +103,11 @@
                                 aria-hidden="true"></i><span class="hide-menu">Quyền</span></a>
                     </li>
                     <li>
-                        <a href="groupwork.html" class="waves-effect"><i class="fa fa-table fa-fw"
+                        <a href="${ctx}/job" class="waves-effect"><i class="fa fa-table fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Dự án</span></a>
                     </li>
                     <li>
-                        <a href="task.html" class="waves-effect"><i class="fa fa-table fa-fw"
+                        <a href="${ctx}/task" class="waves-effect"><i class="fa fa-table fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Công việc</span></a>
                     </li>
                     <li>
@@ -183,10 +183,10 @@
                                                 <td>
                                                     <a href="${ctx}/user-edit?id=${u.id}" class="btn btn-sm btn-primary">Sửa</a>
                                                     <a href="${ctx}/user-delete?id=${u.id}" class="btn btn-sm btn-danger"
-                                                    onclick="return confirm('Bạn chắc chắn muốn user quyền này?');">
+                                                    onclick="return confirm('Bạn chắc chắn muốn xóa user này?');">
                                                     Xóa
                                                     </a>
-                                                    <a href="${ctx}/user-details?id=${u.id}" class="btn btn-sm btn-info">Xem</a>
+                                                    <a href="${ctx}/user-detail?id=${u.id}" class="btn btn-sm btn-info">Xem</a>
                                                 </td>
                                             </tr>
                                         </c:forEach>

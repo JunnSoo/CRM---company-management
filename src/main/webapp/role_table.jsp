@@ -56,7 +56,7 @@
                             <li><a href="${ctx}/profile.html">Thông tin cá nhân</a></li>
                             <li><a href="#">Thống kê công việc</a></li>
                             <li class="divider"></li>
-                            <li><a href="">Đăng xuất</a></li>
+                            <li><a href="${ctx}/logout">Đăng xuất</a></li>
                         </ul>
                     </div>
                 </li>
@@ -84,8 +84,8 @@
                         <i class="fa fa-modx fa-fw" aria-hidden="true"></i><span class="hide-menu">Quyền</span>
                     </a>
                 </li>
-                <li><a href="${ctx}/groupwork.jsp" class="waves-effect"><i class="fa fa-table fa-fw"></i><span class="hide-menu">Dự án</span></a></li>
-                <li><a href="${ctx}/task.jsp" class="waves-effect"><i class="fa fa-table fa-fw"></i><span class="hide-menu">Công việc</span></a></li>
+                <li><a href="${ctx}/job" class="waves-effect"><i class="fa fa-table fa-fw"></i><span class="hide-menu">Dự án</span></a></li>
+                <li><a href="${ctx}/task" class="waves-effect"><i class="fa fa-table fa-fw"></i><span class="hide-menu">Công việc</span></a></li>
                 <li><a href="${ctx}/blank.html" class="waves-effect"><i class="fa fa-columns fa-fw"></i><span class="hide-menu">Blank Page</span></a></li>
                 <li><a href="${ctx}/404.html" class="waves-effect"><i class="fa fa-info-circle fa-fw"></i><span class="hide-menu">Error 404</span></a></li>
             </ul>
@@ -107,7 +107,7 @@
 
             <!-- Flash message -->
             <c:if test="${not empty param.msg}">
-                <div class="alert">
+                <div class="alert
                     <c:choose>
                         <c:when test='${param.msg eq "created" || param.msg eq "updated" || param.msg eq "deleted"}'>alert-success</c:when>
                         <c:otherwise>alert-danger</c:otherwise>

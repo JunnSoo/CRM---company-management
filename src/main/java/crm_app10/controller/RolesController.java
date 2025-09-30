@@ -104,7 +104,7 @@ public class RolesController extends HttpServlet {
                                    && rolesService.insertRole(roleName.trim(), desc);
 
                         resp.sendRedirect(req.getContextPath() + (ok
-                                ? "/roles?msg=created"
+                                ? "/roles-add?msg=created"
                                 : "/roles-add?msg=failed"));
                         return; // tránh fall-through
                     } catch (Exception e) {
